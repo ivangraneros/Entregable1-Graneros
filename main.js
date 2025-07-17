@@ -1,8 +1,8 @@
 const IVA = 0.21;
 const productosTienda = [
-    {id: 1, producto: "Remera de Futbol", precio: 50000},
-    {id: 2, producto: "Short de Futbol", precio: 30000},
-    {id: 3, producto: "Botines de Futbol", precio: 70000},
+    {id: 1, producto: "Remera de Futbol", precio: 50_000},
+    {id: 2, producto: "Short de Futbol", precio: 30_000},
+    {id: 3, producto: "Botines de Futbol", precio: 70_000},
 ];
 
 // Carrito donde se van a guardar los productos que seleccione el usuario
@@ -27,18 +27,30 @@ function elegirProducto() {
         if (respuesta === "terminar") {
             continuar = false;
         } else {
-            let id =parseInt(respuesta);
-            let encontrado = false;
+            let id = parseInt(respuesta);
+            let productoSeleccionado = null;
 
             for (let i = 0; i < productosTienda.length; i++) {
                 if (productosTienda[i].id === id) {
-                    carrito.push(productosTienda[i]);
-                    alert("Agregaste: " + productosTienda[i].producto);
-                    encontrado = true;
+                    productoSeleccionado = productosTienda[i];
                 }
             }
+            if (productoSeleccionado) {
+                let yaAgregado = false;
+                for (let i = 0; i < carrito.length; i++) {
+                    if (carrito[i].id === productoSeleccionado.id) {
+                        yaAgregado = true;
+                    }
+                }
 
-            if (!encontrado) {
+                if (yaAgregado) {
+                    alert("Ese producto ya esta en el carrito")
+                } else {
+                    carrito.push(productoSeleccionado);
+                    alert("Agregaste: " + productoSeleccionado.producto)
+                }
+
+            } else {
                 alert("Producto no válido, intentá de nuevo.");
             }
         }
@@ -88,5 +100,16 @@ function finalizarCompra() {
 
 }
 
+const productosCaros = productosTienda.filter(function(items){
+    return items.precio > 60_000;
+});
+
+const productosBaratos = productosTienda.filter(function(items){
+    return items.precio < 60_000;
+});
+
+
+console.table(productosCaros);
+console.table(productosBaratos);
 elegirProducto();
 finalizarCompra();
