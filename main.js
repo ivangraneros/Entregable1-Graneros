@@ -108,7 +108,10 @@ const productosBaratos = productosTienda.filter(function(items){
     return items.precio < 60_000;
 });
 
+const busquedaNombre = productosTienda.find(productos => productos.producto === "Remera de Futbol");
 
+
+console.table(busquedaNombre);
 console.table(productosCaros);
 console.table(productosBaratos);
 elegirProducto();
